@@ -5,15 +5,18 @@
 
 <h1>{{ post.title }}</h1>
 <small> By: {{ post.author.username }} -
+  {% if user.is_authenticated %}
+
   <a href=" {% url 'update-post' post.pk%}"> Update </a>
   /
   <a href=" {% url 'delete-post' post.pk%}"> Delete </a>
   <br/>
-  {{ post.post_date }}
+  {% endif %}
+<i> {{ post.post_date }} </i>
 </small>
 <hr>
 </br>
-{{ post.body}}
+{{ post.body|safe }} {% comment %} safe is used to render html tags {% endcomment %}
 
 </br>
 </br>
