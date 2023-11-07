@@ -1,27 +1,51 @@
-{% extends "base.html" %}
-{% block title %} {{ post.title_tag }}  {% endblock %}
-
-{% block content %}
-{% comment %} current user: {{ user.id }}
-post author: {{ post.author.id }} {% endcomment %}
-
+{% extends "base.html" %} {% block title %} {{ post.title_tag }} {% endblock %}
+{% block content %} {% comment %} current user: {{ user.id }} post author: {{
+post.author.id }} {% endcomment %}
 <h1>{{ post.title }} - {{ post.author.id }}</h1>
-<small> By: {{ post.author.first_name }} {{post.author.last_name | slice:":1" }}. -
+<small>
+  By: {{ post.author.first_name }} {{post.author.last_name | slice:":1" }}. -
   {% if user.is_authenticated %}
     {% if user.id == post.author.id %}
-      <a href=" {% url 'update-post' post.pk%}"> Edit </a>
-      /
-      <a href=" {% url 'delete-post' post.pk%}"> Delete </a>
-      <br/>
+  <a href=" {% url 'update-post' post.pk%}"> Edit </a>
+  /
+  <a href=" {% url 'delete-post' post.pk%}"> Delete </a>
+  <br />
+  <br />
     {% endif %}
   {% endif %}
-<i> {{ post.post_date }} </i>
+  <i> {{ post.post_date }} </i>
 </small>
-<hr>
-</br>
+<hr />
+<br />
 {{ post.body|safe }} {% comment %} safe is used to render html tags {% endcomment %}
+<br />
+<br />
 
-</br>
-</br>
+<br />
 <a class="btn btn-dark bg-dark" href="{% url 'home' %}">Back</a>
+<br />
+<br />
+
+<hr />
+<br />
+<div class="alert alert-primary" role="alert">
+  <form method="POST" action="{% url 'like_post' post.pk %}">
+    {% csrf_token %}
+    <button
+        type="submit"
+        name="post_id"
+        value="{{ post.id }}"
+        class="btn btn-primary btn-sm">
+        Like
+    </button>
+
+  {% if total_likes == 1 %}
+      {{ total_likes }} like
+  {% else %}
+      {{ total_likes }} likes
+  {% endif %}
+</form>
+</div>
+
+
 {% endblock %}
