@@ -6,7 +6,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('title', 'title_tag', 'author', 'body')
 
-        widgets = {
+        widgets = { #to add css classes to the form fields
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'title_tag': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'elder', 'type': 'hidden'}),
