@@ -16,11 +16,7 @@ post.author.id }} {% endcomment %}
   <i> {{ post.post_date }} </i>
 </small>
 <hr />
-<br />
 {{ post.body|safe }} {% comment %} safe is used to render html tags {% endcomment %}
-<br />
-<br />
-
 <br />
 <a class="btn btn-dark bg-dark" href="{% url 'home' %}">Back</a>
 <br />
