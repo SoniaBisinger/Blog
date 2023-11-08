@@ -31,19 +31,34 @@ post.author.id }} {% endcomment %}
 <div class="alert alert-primary" role="alert">
   <form method="POST" action="{% url 'like_post' post.pk %}">
     {% csrf_token %}
-    <button
-        type="submit"
-        name="post_id"
-        value="{{ post.id }}"
-        class="btn btn-primary btn-sm">
-        Like
-    </button>
+    {% if user.is_authenticated %}
+      {% if liked %}
+        <button
+            type="submit"
+            name="post_id"
+            value="{{ post.id }}"
+            class="btn btn-danger btn-sm">
+            Unike
+        </button>
+      {% else %}
+        <button
+          type="submit"
+          name="post_id"
+          value="{{ post.id }}"
+          class="btn btn-primary btn-sm">
+          Like
+        </button>
+      {% endif %}
+    {% else %}
+        <small><em><a href="{% url 'login' %}">Login</a> to like this post </em><br/> </small>
+    {% endif %}
 
   {% if total_likes == 1 %}
       {{ total_likes }} like
   {% else %}
       {{ total_likes }} likes
   {% endif %}
+  {% include 'like.svg' %}
 </form>
 </div>
 
