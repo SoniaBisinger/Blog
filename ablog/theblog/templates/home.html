@@ -1,28 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Posts</h1>
+<h1 style="color:blue"><span style="background-image: linear-gradient(to right, #16FF00, #FFED00);">Posts</span></h1>
 <ul>
-{% for post in object_list %}
-<li>
-  <a href=" {% url 'article-detail' post.pk %}"
-  > {{ post.title }} </a> - {{post.author.username }}
+  {% for post in object_list %}
+    <li>
+      <a href="{% url 'article-detail' post.pk %}" style="text-decoration: none; color:##3b6698;"
+      > <strong>{{ post.title }}</strong> </a> - {{post.author.username }}
 
-  {%  if user.is_authenticated %}
-    {% if user.id == post.author.id %}
-      -
-      <small>
-        <a href=" {% url 'update-post' post.pk%}"> Edit </a>
-        /
-        <a href=" {% url 'delete-post' post.pk%}"> Delete </a>
-      </small>
-    {% endif %}
-  {% endif %}
+      {%  if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+          -
+          <small>
+            <a href="{% url 'update-post' post.pk%}" style="color:#65521d"> Edit </a>
+            /
+            <a href="{% url 'delete-post' post.pk%}" style="color:#c61b06"> Delete </a>
+          </small>
+        {% endif %}
+      {% endif %}
 
-  </br>
-  {{ post.body|truncatewords:20|safe }}
-  <small><i>{{ post.post_date }}</i></small></li>
-{% endfor %}
+      </br>
+      {{ post.summary}}
+      <small><i style="color:#736969;">{{ post.post_date }}</i></small>
+      <hr style="width:50%; color:#b455ac;">
+    </li>
+  {% endfor %}
 </ul>
 
 {% endblock %}
