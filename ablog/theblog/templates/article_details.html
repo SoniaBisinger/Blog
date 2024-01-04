@@ -1,15 +1,14 @@
 {% extends "base.html" %} {% block title %} {{ post.title_tag }} {% endblock %}
 {% block content %} {% comment %} current user: {{ user.id }} post author: {{
 post.author.id }} {% endcomment %}
-<h1>{{ post.title }} - {{ post.author.id }}</h1>
+<h1>{{ post.title }}</h1>
 <small>
-  By: {{ post.author.first_name }} {{post.author.last_name | slice:":1" }}. -
+  By: {{ post.author.first_name }} {{post.author.last_name | first }}. -
   {% if user.is_authenticated %}
-    {% if user.id == post.author.id %}
+    {% if user.id == post.author.id or user.is_superuser %}
   <a href=" {% url 'update-post' post.pk%}"> Edit </a>
   /
   <a href=" {% url 'delete-post' post.pk%}"> Delete </a>
-  <br />
   <br />
     {% endif %}
   {% endif %}

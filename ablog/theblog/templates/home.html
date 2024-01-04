@@ -9,7 +9,7 @@
       > <strong>{{ post.title }}</strong> </a> - {{post.author.username }}
 
       {%  if user.is_authenticated %}
-        {% if user.id == post.author.id %}
+        {% if user.id == post.author.id or user.is_superuser %}
           -
           <small>
             <a href="{% url 'update-post' post.pk%}" style="color:#65521d"> Edit </a>
